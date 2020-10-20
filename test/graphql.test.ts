@@ -43,21 +43,48 @@ describe("Graphql", () => {
         done();
       });
   });
-//   it("[Mutation] Login", async (done) => {
-//     request(appServer)
-//       .post("/gql")
-//       .set("Accept", "application/json")
-//       .send({ query: "{ hello }" })
-//       .expect("Content-Type", /json/)
-//       .expect(200)
-//       .expect({
-//         data: {
-//           hello: "Olá Conta Simples",
-//         },
-//       })
-//       .end((err) => {
-//         if (err) return done(err);
-//         done();
-//       });
-//   });
+  it("[Mutation] Login Ok", async (done) => {
+    request(appServer)
+      .post("/gql")
+      .set("Accept", "application/json")
+      .send({ query: `mutation{ 
+          login(username: "hector", password: "root") {
+            username
+          }  
+        }`})
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .expect({
+        data: {
+          login: {
+            username: "hector"
+          }
+        },
+      })
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
+  it("[Mutation] Login error", async (done) => {
+    request(appServer)
+      .post("/gql")
+      .set("Accept", "application/json")
+      .send({ query: `mutation{ 
+          login(username: "hector", password: "teste") {
+            username
+          }  
+        }`})
+      .expect("Content-Type", /json/)
+      .expect(200)
+      .expect({
+        data: {
+          login: null
+        },
+      })
+      .end((err) => {
+        if (err) return done(err);
+        done();
+      });
+  });
 });

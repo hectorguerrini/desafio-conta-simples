@@ -1,13 +1,11 @@
 import { graphqlHTTP } from "express-graphql";
 import { addMocksToSchema, makeExecutableSchema } from "graphql-tools";
 import { LoginResolver, LoginTypeDef } from "../models/schema/login.graphql";
-
+import mocks from "../mocks/mocks";
 const typeRoot = `type Query {
     hello: String
   }`;
-const mocks = {
-  String: () => 'hector'
-}
+
 const schema = makeExecutableSchema({
 typeDefs: [typeRoot, LoginTypeDef],
 resolvers: [LoginResolver]
@@ -20,7 +18,8 @@ const schemaWithMock = addMocksToSchema({
 var root = { hello: () => "Olá Conta Simples" };
 const graphql = graphqlHTTP({
 schema: schemaWithMock,
-rootValue: root
+rootValue: root,
+graphiql: true
 });
 
 export default graphql;

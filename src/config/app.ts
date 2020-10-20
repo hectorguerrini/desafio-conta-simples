@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
+// import helmet from 'helmet';
 import { json } from 'body-parser';
 import router  from '../routes/router';
 class App {
@@ -14,7 +14,7 @@ class App {
         // set settings cors using lib cors
         this.app.use(cors());
         // set settings http headers using lib helmet
-        this.app.use(helmet());
+        // this.app.use(helmet());
         // set app to support application/json post data
         this.app.use(json());
         this.app.use(router);
